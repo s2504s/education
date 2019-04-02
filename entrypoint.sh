@@ -31,4 +31,4 @@ __create_hostkeys
 __create_user
 __add_route
 
-exec /usr/sbin/sshd -D -e "$@"
+exec nginx -g 'daemon off;'
