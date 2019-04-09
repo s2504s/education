@@ -7,6 +7,8 @@ services:
     restart: always
     cap_add:
       - 'NET_ADMIN'
+    volumes:
+      - ./configs:/mnt/configs
     networks:
       - cloud1
 
@@ -17,6 +19,8 @@ services:
     restart: always
     cap_add:
       - 'NET_ADMIN'
+    volumes:
+      - ./configs:/mnt/configs
     networks:
       cloud1:
         ipv4_address: 172.26.1.128
@@ -24,8 +28,6 @@ services:
         ipv4_address: 172.26.2.128
       cloud3:
         ipv4_address: 172.26.3.128
-      cloud4:
-        ipv4_address: 172.26.4.128
 
   host3:
     image: "s2504s/lesson4"
@@ -34,18 +36,10 @@ services:
     restart: always
     cap_add:
       - 'NET_ADMIN'
+    volumes:
+      - ./configs:/mnt/configs
     networks:
       cloud3:
-
-  host4:
-    image: "s2504s/lesson4"
-    container_name: "host4"
-    hostname: "host3"
-    restart: always
-    cap_add:
-      - 'NET_ADMIN'
-    networks:
-      - cloud4
 
 networks:
   cloud1:
@@ -76,14 +70,4 @@ networks:
         - subnet: "172.26.3.0/24"
     driver_opts:
       "com.docker.network.bridge.name": "br-cloud3"
-      "com.docker.network.bridge.enable_icc": "true"
-
-  cloud4:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.26.4.0/24"
-    driver_opts:
-      "com.docker.network.bridge.name": "br-cloud4"
       "com.docker.network.bridge.enable_icc": "true"
