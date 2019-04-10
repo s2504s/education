@@ -1,0 +1,12 @@
+1. Drop incoming icmp packets on host3 from host1
+2. Switch the dropping rule between host3 and host1
+3. Allow connections from host1 to host2 on port 80, drop all connections to port 443 from host1 to host2 in the custom chain. Log dropped connections.
+4. For all chains of the filter table, set the default deny rule
+5. Create a custom chain MYCHAIN ​​In the table filter and set the default deny rule to it. All other chains in this table should be set to allow
+    ** On host2 create a custom LOGGING chain.
+    ** Forward connections to host 172.26.1.128 and port 10002 in this chain
+    ** Log this connection
+    ** Drop the connection
+6. Connect from host1 to http://172.26.2.128:10004 get a response from the web server on host3. Default rule for the chain Filter on the host2 must be DROP
+7. Connect from host1 to http://100.98.100.98, get a response from the web server on host3
+8. Connect from host1 to http://100.98.100.98:10005, receive a response from the webserver on host3 containing IP 1.1.1.1

@@ -1,0 +1,73 @@
+version: '2.0'
+services:
+  host1:
+    image: "s2504s/lesson4"
+    container_name: "host1"
+    hostname: "host1"
+    restart: always
+    cap_add:
+      - 'NET_ADMIN'
+    volumes:
+      - ./configs:/mnt/configs
+    networks:
+      - cloud1
+
+  host2:
+    image: "s2504s/lesson4"
+    container_name: "host2"
+    hostname: "host2"
+    restart: always
+    cap_add:
+      - 'NET_ADMIN'
+    volumes:
+      - ./configs:/mnt/configs
+    networks:
+      cloud1:
+        ipv4_address: 172.26.1.128
+      cloud2:
+        ipv4_address: 172.26.2.128
+      cloud3:
+        ipv4_address: 172.26.3.128
+
+  host3:
+    image: "s2504s/lesson4"
+    container_name: "host3"
+    hostname: "host3"
+    restart: always
+    cap_add:
+      - 'NET_ADMIN'
+    volumes:
+      - ./configs:/mnt/configs
+    networks:
+      cloud3:
+
+networks:
+  cloud1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.26.1.0/24"
+    driver_opts:
+      "com.docker.network.bridge.name": "br-cloud1"
+      "com.docker.network.bridge.enable_icc": "true"
+
+  cloud2:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.26.2.0/24"
+    driver_opts:
+      "com.docker.network.bridge.name": "br-cloud2"
+      "com.docker.network.bridge.enable_icc": "true"
+
+  cloud3:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.26.3.0/24"
+    driver_opts:
+      "com.docker.network.bridge.name": "br-cloud3"
+      "com.docker.network.bridge.enable_icc": "true"
