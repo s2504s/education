@@ -3,8 +3,6 @@
 * Run environment:
 ```
 cd education
-yum install -y docker
-pip install
 docker-compose up -d
 ```
 
